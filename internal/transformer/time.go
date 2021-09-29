@@ -14,9 +14,7 @@ func (t TimeTransformer) Transformer(typ reflect.Type) func (dst, src reflect.Va
 	if typ == reflect.TypeOf(time.Time{}) {
 		return func(dst, src reflect.Value) error {
 			if dst.CanSet() {
-				isZero := dst.MethodByName("IsZero")
-				result := isZero.Call([]reflect.Value{})
-				if result[0].Bool() {
+				if !isZero(src) {
 					dst.Set(src)
 				}
 			}
@@ -24,4 +22,10 @@ func (t TimeTransformer) Transformer(typ reflect.Type) func (dst, src reflect.Va
 		}
 	}
 	return nil
+}
+
+func isZero(v reflect.Value) bool {
+	m := v.MethodByName("IsZero")
+	res := m.Call([]reflect.Value{})
+	return res[0].Bool()
 }

@@ -201,6 +201,27 @@ func TestFactory_Patch(t *testing.T) {
 				Published: time.Date(1997, 6, 26, 0, 0, 0, 0, time.UTC),
 			},
 		},
+		"PatchBookPublished": {
+			sut: bookWithAllFields,
+			in: &Book{
+				Published: time.Date(2000, 6, 26, 0, 0, 0, 0, time.UTC),
+			},
+			outVal: &Book{
+				Title: "Harry Potter and the Philosopher's Stone",
+				ISBN:  "0-7475-3269-9",
+				Price: 1500,
+				Author: &Author{
+					FamilyName: "Rowling",
+					FirstName:  "J. K.",
+					Birthday:   time.Date(1965, 7, 31, 0, 0, 0, 0, time.UTC),
+					Nationality: Country{
+						Code: "uk",
+						Name: "United Kingdom",
+					},
+				},
+				Published: time.Date(2000, 6, 26, 0, 0, 0, 0, time.UTC),
+			},
+		},
 		"PatchBookAuthorNationality": {
 			sut: bookWithAllFields,
 			in: &Book{
